@@ -8,16 +8,17 @@ from datetime import timedelta
 
 load_dotenv()
 
-app = Flask(__name__, template_folder="views")
+app = Flask(__name__, template_folder = "views")
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
-app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("SQLALCHEMY_DATABASE_URI")
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DB_URI")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 app.config["SESSION_PERMANENT"] = False
 app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(minutes=30)
 
+
 # Session(app)
-db = SQLAlchemy(app)
+db = SQLAlchemy(app) 
 
 login_manager = LoginManager(app)
 login_manager.login_view = "login"
