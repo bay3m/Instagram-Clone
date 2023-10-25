@@ -1,0 +1,143 @@
+*{
+    padding: 0px;
+    margin: 0px;
+}
+
+body{
+    display: flex;
+    width: 1440px;
+    height: 1024px;
+    border: 5px solid black;
+}
+
+div#Page-Left{
+    /* background-color: aqua; */
+    width: 440px;
+    height: 1024px;
+    border-right: 1px solid black;
+}
+
+div#Nama-App{
+    padding: 25px 30px;
+    /* background-color: beige; */
+}
+
+h1#AMBATUGRAM{
+    font-size: 50px;
+    width: 400px;
+    height: 60px;
+}
+
+div#Tempat-Fitur{
+    /* background-color: cadetblue; */
+    padding: 50px 0;
+}
+
+h2.Fitur{
+    margin-top: 42px;
+    font-style: italic;
+    font-size: 55px;
+    margin: 50px 0;
+    font-family: Inter;
+}
+
+div#Profile{
+    margin-top: 100px;
+    display: flex;
+    /* background-color: brown; */
+    align-items: center;
+    justify-content: center;
+}
+
+img#Profile-Picture{
+    width: 133px;
+    height: 133px;
+    border-radius: 50%;
+}
+
+h2#Profile-Profile{
+    font-size: 48px;
+}
+
+
+/* ########################################################################################################## */
+
+div#Page-Right{
+    /* background-color: beige; */
+    width: 100%;
+    height: 100%;
+    padding: 0px 100px;
+}
+
+div#Account-Post{
+    display: flex;
+    align-items: center;
+}
+
+div#Very-Small-Dots{
+    margin: 8px;
+    width: 8px;
+    height: 8px;
+    background-color: #D9D9D9;
+    border-radius: 50%;
+}
+
+img#Account-Profile{
+    width: 60px;
+    height: 60px;
+    flex-shrink: 0;
+    border-radius: 50%;
+}
+
+div#Edit-Post{
+    display: flex;
+    padding-left: 400px;
+}
+
+div.Triple-Dots{
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #D9D9D9;
+    margin: 3px;
+}
+
+div#Post{
+    display: flex;
+    justify-content: center;
+    width: 770px;
+    height: 723px;
+    border-radius: 13px;
+    background: #D9D9D9;
+}
+
+img#Posted-Picture{
+    width: 568px;
+    height: 721px;
+}
+
+div#Widget{
+    display: flex;
+    width: 770px;
+}
+
+div#Widget > div#Widget-Left-Side, div#Widget-Right-Side{
+    display: flex;
+}
+
+h4.Widget-Left, h4.Widget-Right{
+    font-size: 32px;
+}
+
+h4.Widget-Right{
+    padding-left: 600px;
+}
+
+h3#Caption{
+    color: #00F;
+    font-family: Inter;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
