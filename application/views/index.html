@@ -25,16 +25,27 @@
             <div class="form-group">
                 {{ form.submit(class="btn btn-primary") }}
             </div>
-
         </form>
+
+        <div class="post-container">
+            <!-- {% for post in posts | reverse %} -->
+            {% for post in posts %}
+                <div class="post" style="border: 1px black solid; margin: 10px 0px;">
+                    <img src="{{ url_for('static', filename='' + post.photo) }}" alt="Post Image">
+                    <p>{{ post.caption }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    
+        <div class="pagination-box">
+            {% for page_number in posts.iter_pages() %}
+                {% if page_number == posts.page %}
+                    <a href="{{ url_for('index', page=page_number) }}" style="color: red;">{{page_number}}</a>
+                {% else %}
+                    <a href="{{ url_for('index', page=page_number) }}" style="color: black;">{{page_number}}</a>
+                {% endif %}
+            {% endfor %}
+        </div>
     </div>
 
-    <div class="post-container">
-        {% for post in posts | reverse %}
-            <div class="post" style="border: 1px black solid; margin: 10px 0px;">
-                <img src="{{ url_for('static', filename='' + post.photo) }}" alt="Post Image">
-                <p>{{ post.caption }}</p>
-            </div>
-        {% endfor %}
-    </div>
-{% endblock content %}
+{% endblock content %}  

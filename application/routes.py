@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_user, login_required, logout_user, current_user
 
 from application import app
@@ -32,10 +32,15 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
-@app.route('/profile')
-# @login_required
-def profile():
-    return render_template('profile.html', title=f'{current_user.fullname} Profile')
+# @app.route('/profile')
+# # @login_required
+# def profile():
+#     return render_template('profile.html', title=f'{current_user.fullname} Profile')
+
+@app.route('/<string:username>')
+@login_required
+def profile(username):
+    return render_template('profile.html', title=f'{current_user.fullname} profile')
 
 @app.route('/', methods=['GET', 'POST'])
 @login_required
@@ -52,7 +57,8 @@ def index():
         db.session.commit()
         flash('your image has been posted 💖!', 'success')
 
-    posts = Post.query.filter_by(author_id = current_user.id).all()
+    page = request.args.get('page', 1, type=int)
+    posts = Post.query.filter_by(author_id = current_user.id).order_by(Post.post_date.desc()).paginate(page=page, per_page=3)
 
     return render_template('index.html', title='Home', form=form, posts=posts)
 
@@ -66,5 +72,6 @@ def about():
     return render_template('about.html', title='About')
 
 @app.route('/editProfile')
+@login_required
 def editProfile():
     return render_template('editprofile.html', title='Edit Profile')
