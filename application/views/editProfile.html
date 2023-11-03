@@ -3,17 +3,33 @@
 {% block content %}
 
 <div class="">
-    <form action="" method="post">
+    <form action="" method="POST">
         <fieldset class="">
             <legend class="">edit profile</legend>
 
+            <img src="#" alt="user profile picture">
             <h1>{{ current_user.fullname }}</h1>
-            <form action="" method="post">
-                <div class="">
-                    {{ form.username(class="") }}
-                </div>
-            </form>
+
+            <div class="">
+                <p>username: {{ current_user.username }}</p>
+            </div>
+
+            <div class="">
+                <p>email: {{ current_user.email }}</p>
+            </div>
+            
+            <div class="">
+                <p>password: {{ current_user.password }}</p>
+                <small>
+                    <a href="{{ url_for('resetPassword') }}">reset password?</a>
+                </small>
+            </div>
+
         </fieldset>
+
+        <div class="">
+            {{ form.submit(class="") }}
+        </div>
     </form>
 </div>
 

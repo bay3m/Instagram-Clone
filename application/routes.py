@@ -20,7 +20,7 @@ def login():
         user = User.query.filter_by(username=username).first()
         if user and password == user.password:
             login_user(user)
-            return redirect(url_for('profile'))
+            return redirect(url_for('profile', username=username))
         else:
             flash('Invalid username or password', 'error')
 
@@ -74,4 +74,22 @@ def about():
 @app.route('/editProfile')
 @login_required
 def editProfile():
-    return render_template('editprofile.html', title='Edit Profile')
+    form = EditProfileForm()
+    return render_template('editprofile.html', title='Edit Profile', form=form)
+
+@app.route('/resetPassword')
+@login_required
+def resetPassword():
+    form = ResetPasswordForm()
+    return render_template('resetPassword.html', title='Reset Password', form=form)
+
+@app.route('/forgotPassword')
+def forgotPassword():
+    form = ForgotPasswordForm()
+    return render_template('forgotPassword.html', title='Forgot Password', form=form)
+
+@app.route('/editPost')
+@login_required
+def editPost():
+    form = EditPostForm()
+    return render_template('editPost.html', title='Edit Post', form=form)
