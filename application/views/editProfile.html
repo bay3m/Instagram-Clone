@@ -11,11 +11,13 @@
             <h1>{{ current_user.fullname }}</h1>
 
             <div class="">
-                <p>username: {{ current_user.username }}</p>
+                {{ form.username.label() }}
+                {{ form.username(class="") }}
             </div>
 
             <div class="">
-                <p>email: {{ current_user.email }}</p>
+                {{ form.email.label() }}
+                {{ form.email(class="") }}
             </div>
             
             <div class="">

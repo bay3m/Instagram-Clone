@@ -27,20 +27,17 @@ def login():
     return render_template('login.html', title="Login", form=form)
 
 @app.route('/logout')
-# @login_required  
+@login_required  
 def logout():
     logout_user()
     return redirect(url_for('login'))
 
-# @app.route('/profile')
-# # @login_required
-# def profile():
-#     return render_template('profile.html', title=f'{current_user.fullname} Profile')
-
 @app.route('/<string:username>')
 @login_required
 def profile(username):
-    return render_template('profile.html', title=f'{current_user.fullname} profile')
+    posts = current_user.posts
+    reverse_posts = posts[::-1]
+    return render_template('profile.html', title=f'{current_user.fullname} Profile', posts=reverse_posts)
 
 @app.route('/', methods=['GET', 'POST'])
 @login_required
@@ -75,7 +72,9 @@ def about():
 @login_required
 def editProfile():
     form = EditProfileForm()
-    return render_template('editprofile.html', title='Edit Profile', form=form)
+    form.username.data = current_user.username
+    form.email.data = current_user.email
+    return render_template('editprofile.html', title='Edit Profile',form=form)
 
 @app.route('/resetPassword')
 @login_required
