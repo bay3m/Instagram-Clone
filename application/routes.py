@@ -68,13 +68,30 @@ def signup():
 def about():
     return render_template('about.html', title='About')
 
-@app.route('/editProfile')
+@app.route('/editProfile', methods=['GET', 'POST'])
 @login_required
 def editProfile():
     form = EditProfileForm()
+
+    if form.validate_on_submit():
+        user = User.query.get(current_user.id)
+        if form.username.data != user.username:
+            user.username = form.username.data
+
+        user.fullname = form.fullname.data
+        user.bio = form.bio.data
+
+        if form.profile_pic.data:
+            pass
+        db.session.commit()
+        flash('Profile update', 'success')
+        return redirect(url_for('profile', username=current_user.username))
+    
     form.username.data = current_user.username
-    form.email.data = current_user.email
-    return render_template('editprofile.html', title='Edit Profile',form=form)
+    # form.email.data = current_user.email
+    form.bio.data = current_user.bio
+
+    return render_template('editprofile.html', title=f'Edit {current_user.username}Profile',form=form)
 
 @app.route('/resetPassword')
 @login_required
