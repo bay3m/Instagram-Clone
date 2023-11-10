@@ -4,20 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-</head>
-<body>
-    <header>
-        <img src="#" alt="logo">
+    <style>
+        body.logout-header-body{
+            background-color: antiquewhite;
+        }
 
-        <ul>
+        header.logout-header-header{
+            background-color: bisque;
+            display: flex;
+            height: 35px;
+            flex-wrap: wrap;
+            align-content: center;
+        }
+
+        div.logout-header-header-left{
+            width: 50%;
+        }
+
+        img.logout-header-img{
+            width: 50%;
+        }
+
+        ul.logout-header-header-right{
+            display: flex;
+            justify-content: space-around;
+            width: 50%;
+        }
+
+        a.logout-header-a{
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body class="logout-header-body">
+    <header class="logout-header-header">
+        <div class="logout-header-header-left">
+            <img src="#" alt="logo" class="logout-header-img">
+        </div>
+
+        <ul class="logout-header-header-right">
             <li>
-                <a href="{{ url_for('about') }}">About</a>
+                <a href="{{ url_for('about') }}" class="logout-header-a">About</a>
             </li>
             <li>
-                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('login') }}" class="logout-header-a">Login</a>
             </li>
             <li>
-                <a href="{{ url_for('signup') }}">Signup</a>
+                <a href="{{ url_for('signup') }}" class="logout-header-a">Signup</a>
             </li>
         </ul>
 
