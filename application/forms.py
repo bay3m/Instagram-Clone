@@ -31,7 +31,7 @@ class EditProfileForm(SignUpForm):
     confirm_password    = None
     email               = None
     bio                 = StringField("bio")
-    profile_pic         = FileField("picture picture", validators=[FileAllowed(["jpg", "png", "jpeg"])])
+    profile_pic         = FileField("picture", validators=[FileAllowed(["jpg", "png", "jpeg"])])
     submit              = SubmitField("update profile")
 
 ###############################################################################################################################################

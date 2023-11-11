@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash, request
+from flask import render_template, redirect, url_for, flash, request, make_response, jsonify
 from flask_login import login_user, login_required, logout_user, current_user
 
 from application import app
@@ -61,7 +61,31 @@ def index():
 
 @app.route('/signup')
 def signup():
+    
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+
     form = SignUpForm()
+
+    if form.validate_on_submit():
+        username = form.username.data
+        fullname = form.fullname.data
+        email = form.email.data
+        password = form.password.data
+
+        user = User(
+            username=username,
+            fullname=fullname,
+            email=email,
+            password=password
+        )
+        
+        db.session.add(user)
+        db.session.commit()
+        login_user(user)
+        return redirect(url_for('profile', username=username))
+        
+
     return render_template('signup.html', title='Signup', form=form)
 
 @app.route('/about')
@@ -88,7 +112,7 @@ def editProfile():
         return redirect(url_for('profile', username=current_user.username))
     
     form.username.data = current_user.username
-    # form.email.data = current_user.email
+    form.fullname.data = current_user.fullname
     form.bio.data = current_user.bio
 
     return render_template('editprofile.html', title=f'Edit {current_user.username}Profile',form=form)
@@ -109,3 +133,18 @@ def forgotPassword():
 def editPost():
     form = EditPostForm()
     return render_template('editPost.html', title='Edit Post', form=form)
+
+@app.route('/like/<int:post_id>', methods=['POST'])
+@login_required
+def like(post_id):
+    like = Like.quert.filter_by(user_id = current_user.id, post_id = post_id)
+
+    if not like:
+        like = Like(user_id=current_user.id, post_id=post_id).first()
+        db.session.add(like)
+        db.session.commit()
+        return make_response(200, jsonify({"status" : True}))
+    
+    db.session.remove(like)
+    db.session.commit()
+    return make_response(200, jsonify({"status" : False}))
