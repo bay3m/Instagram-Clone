@@ -59,7 +59,7 @@ def index():
 
     return render_template('index.html', title='Home', form=form, posts=posts)
 
-@app.route('/signup')
+@app.route('/signup', methods=['POST', 'GET'])
 def signup():
     
     if current_user.is_authenticated:
@@ -105,8 +105,10 @@ def editProfile():
         user.fullname = form.fullname.data
         user.bio = form.bio.data
 
-        if form.profile_pic.data:
+        if form.profile_pic.data != user.profile_pic:
+            # user.profile_pic = form.profile_pic.data
             pass
+
         db.session.commit()
         flash('Profile update', 'success')
         return redirect(url_for('profile', username=current_user.username))
@@ -134,17 +136,19 @@ def editPost():
     form = EditPostForm()
     return render_template('editPost.html', title='Edit Post', form=form)
 
-@app.route('/like/<int:post_id>', methods=['POST'])
+@app.route('/like', methods=['GET', 'POST'])
 @login_required
-def like(post_id):
-    like = Like.quert.filter_by(user_id = current_user.id, post_id = post_id)
+def like():
+    data = request.json
+    post_id = int(data['postId'])
+    like = Like.query.filter_by(user_id = current_user.id, post_id = post_id).first()
 
     if not like:
-        like = Like(user_id=current_user.id, post_id=post_id).first()
+        like = Like(user_id=current_user.id, post_id=post_id)
         db.session.add(like)
         db.session.commit()
-        return make_response(200, jsonify({"status" : True}))
+        return make_response(jsonify({"status" : True}), 200)
     
-    db.session.remove(like)
+    db.session.delete(like)
     db.session.commit()
-    return make_response(200, jsonify({"status" : False}))
+    return make_response(jsonify({"status" : False}), 200)
